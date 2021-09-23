@@ -1,7 +1,6 @@
 package UniformConfiguration;
 
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
@@ -15,10 +14,12 @@ public class main {
     private static SessionWatch sessionWatcher = new SessionWatch();
     private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
+    //单例创建zk实例
     public static ZooKeeper getZk() throws IOException, InterruptedException {
         if (zk == null) {
             synchronized (main.class){
                 if(zk==null){
+                    //地址，超时时间，sessionWatcher
                     zk = new ZooKeeper(address, 3000, sessionWatcher);
                     sessionWatcher.setCountDownLatch(countDownLatch);
                     countDownLatch.await();
@@ -33,16 +34,16 @@ public class main {
 
         try{
             ZooKeeper zk = getZk();
-            CallbackResData resData = new CallbackResData();
+            ConfData conf = new ConfData();
 
-            CallbackWatch callbackWatch = new CallbackWatch();
-            callbackWatch.setZk(zk);
-            callbackWatch.setResData(resData);
-            callbackWatch.await();
+            CallbackUtils callbackUtils = new CallbackUtils();
+            callbackUtils.setZk(zk);
+            callbackUtils.setConf(conf);
+            callbackUtils.registerWatcher();
 
 
             while(true){
-                System.out.println(resData.getData());
+                System.out.println(conf.getData());
                 TimeUnit.MILLISECONDS.sleep(2000);
             }
 

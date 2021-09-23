@@ -14,7 +14,7 @@ public class SessionWatch implements Watcher {
     }
 
     public void process(WatchedEvent watchedEvent) {
-        System.out.println("session watch");
+        System.out.println("****session watch*****");
         System.out.println(watchedEvent.toString());
 
         Event.KeeperState state = watchedEvent.getState();
@@ -25,6 +25,7 @@ public class SessionWatch implements Watcher {
                 break;
             case NoSyncConnected:
                 break;
+            //zk建立连接是一个异步的过程，这里是确保连接完成
             case SyncConnected:
                 countDownLatch.countDown();
                 break;

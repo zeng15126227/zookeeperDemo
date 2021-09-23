@@ -1,6 +1,6 @@
 package UniformConfiguration;
 
-public class CallbackResData {
+public class ConfData {
     String data;
 
     public String getData() {

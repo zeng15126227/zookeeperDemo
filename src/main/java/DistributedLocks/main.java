@@ -1,10 +1,7 @@
 package DistributedLocks;
 
-import UniformConfiguration.CallbackResData;
-import UniformConfiguration.CallbackWatch;
 import UniformConfiguration.SessionWatch;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
